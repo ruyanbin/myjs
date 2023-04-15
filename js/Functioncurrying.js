@@ -1,6 +1,6 @@
 export function curryes5(fn, args) {
   //获取函数需要的参数长度
-  let length = fn.lengtha;
+  let length = fn.length;
   args = args || [];
   return function () {
     let subArgs = args.slice(0);

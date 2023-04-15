@@ -2,25 +2,66 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
   <body>
+    <span
+      >12
+      <div>334</div></span
+    ><span>sapn</span>
+    <a href="http://baidu.com" target="_blank" rel="noopener noreferrer"
+      >23434</a
+    >
+    <div></div>
+    <script src="./jsms/arr.js"></script>
+    <script src="./jsms/pagehide.js"></script>
+    <script>
+      console.log(2133);
+      var a = 0;
+      if (true) {
+        let a = 0;
+        console.log(a);
+
+        console.log(a);
+      }
+    </script>
     <script type="module">
       import { myInstanceof } from "./js/instanceof.js";
       import { create } from "./js/create.js";
       import { myNew, objectFactory } from "./js/new.js";
       import myPromise from "./js/promise.js";
       import { promiseAll } from "./js/promiseAll.js";
+      import { promiseAllError } from "./js/promiseAllError.js";
+      import { formatMoney, formatMoney4 } from "./js/numberZstring.js";
+      import { deepClone } from "./js/deepClone.js";
 
+      // import { odd } from "./js/odd";
+      // 计算 前n个奇数的和
+      // const odda = odd(3);
+      // console.log(odda, "odda");
+      // 手写instanceof
       console.log(myInstanceof(Number, 2));
+      // 创建
       let obj = {
         name: "小明",
         type: "人",
+        test: new RegExp(),
+        arr: {
+          a: 1,
+        },
       };
       let item = create(obj);
       console.log(item, "item");
+      // deepclone
+      deepClone(obj).then((res) => {
+        console.log(res, "deepclone");
+        console.log((res.name = "234234"), "deepclone----1");
+        console.log(res, "deepclone----1");
+
+        console.log(obj, "deepclone");
+      });
       function One(name, age) {
         this.name = name;
         this.age = age;
@@ -67,10 +108,23 @@
           }, 5000);
         });
       }
-
+      function p4() {
+        return new Promise((resolve, reject) => {
+          reject("error");
+        });
+      }
       promiseAll([p1(), p2(), p3()]).then((res) => {
         console.log(res); // [3, 1, 2]
       });
+
+      promiseAllError([p1, p4, p2]).then((res) => {
+        console.log(res, "res");
+      });
+      // 数字字符串转，
+      let str = formatMoney("123456");
+      console.log(str, "2132423");
+      let str2 = formatMoney4("123456");
+      console.log(str2, "2132423");
     </script>
   </body>
 </html>
