@@ -13,32 +13,29 @@ class VueRouter {
         // 路由数组
         this.routes = options.routes || []
         // 将路由数组 转成 Map 格式
-        this.routeMap = this.createMap(this.routes)
+        this.routesMap = this.createMap(this.routes)
         this.history = new HistoryRoute()
         //  初始化、
         this.init()
     }
     init() {
-        if (this.mode === 'hash') {
+        if (this.mode === "hash") {
             // 判断用户打开的时候有没有hash值 没有则跳转‘/’
-            location.hash ? '' : location.hash = '/'
-            window.addEventListener('load', () => {
+            location.hash ? '' : location.hash = "/";
+            window.addEventListener("load", () => {
                 this.history.current = location.hash.slice(1)
             })
-            window.addEventListener('hashchange', () => {
+            window.addEventListener("hashchange", () => {
                 this.history.current = location.hash.slice(1)
-            }
+            })
         } else { //history
-            location.pathname ? '' : location.pathname = '/'
+            location.pathname ? '' : location.pathname = "/"
             window.addEventListener('load', () => {
                 this.history.current = location.pathname
-
             })
             window.addEventListener('popstate', () => {
                 this.history.current = location.pathname
-
             })
-
         }
     }
     createMap(routes) {
@@ -55,10 +52,10 @@ VueRouter.install = function (v) {
             // 判断是否为根组件
             if (this.$options && this.$options.router) { // 如过是根组件
                 this._root = this // 把当前实例挂在到root 上
-                this._rooter = this.$options.router
+                this._router = this.$options.router
+                Vue.util.defineReactive(this, "xxx", this._router.history)
             } else { //  如果是子组件
                 this._root = this.$parent && this.$parent._root
-
             }
             Object.defineProperty(this, '$router', {
                 get() {
@@ -85,10 +82,11 @@ VueRouter.install = function (v) {
     Vue.component('router-view', {
         render(h) {
             let current = this._self._root._router.history.current
-            let routeMap = this._self._root._router.routeMap
+            let routeMap = this._self._root._router.routesMap
             return h(routeMap[current])
         }
     })
 }
 
 export default VueRouter
+
